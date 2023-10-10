@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <ul style="display: flex; width: 80%; justify-content: space-evenly; list-style: none;">
+    <li style="border: 1px solid black; flex: 1; text-align: center; padding: 20px; cursor: pointer;" onclick="bestSellerCategory('BestSellerMain','1')">종합</li>
+    <li style="border: 1px solid black; flex: 1; text-align: center; padding: 20px; cursor: pointer;" onclick="bestSellerCategory('RealTimeBestSeller','1')">실시간</li>
+    <li style="border: 1px solid black; flex: 1; text-align: center; padding: 20px; cursor: pointer;" onclick="bestSellerCategory('DayBestSeller','1')">일별</li>
+    <li style="border: 1px solid black; flex: 1; text-align: center; padding: 20px; cursor: pointer;" onclick="bestSellerCategory('MonthBestSeller','1')">월별/주별</li>
+    <li style="border: 1px solid black; flex: 1; text-align: center; padding: 20px; cursor: pointer;" onclick="bestSellerCategory('HotPriceBestSeller','1')">특가</li>
+    <li style="border: 1px solid black; flex: 1; text-align: center; padding: 20px; cursor: pointer;" onclick="bestSellerCategory('SteadySeller','1')">스테디셀러</li>
+  </ul>
+  <div id="bookList">
+    
+  </div>
+  <script>
+    
+    const bestSellerCategory=(category,page)=>{
+      let url=`/${category}/${page}`
+      fetch(url)
+      .then(response=>response.json())
+      .then(list=>{
+        let bookList=document.querySelector('#bookList')
+        
+        let output=`<p>${list.title}</p>`
+        list.list.forEach(book=>{
+          output+=`
+          <div id="book_bid_${book.bid}" style="clear:both; height:200px">
+            <div class="book_obj">
+              <img src=${book.imgCover} alt="" style="float:left;width:200px ">
+              <div class="book_obj-info" style="float:left">
+                <p>${book.bname}</p>
+                <p><span>${book.author}</span><span>${book.publisher}</span><span>${book.pdate}</span></p>
+                <p>${book.price}</p>
+              </div>
+            </div>
+          </div>
+          `
+        })
+        bookList.innerHTML=output
+      })
+    }
+    bestSellerCategory('BestSellerMain','1')
+  </script>
+</body>
+</html>
