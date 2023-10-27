@@ -1,26 +1,13 @@
 import express, { urlencoded } from "express";
-import ejs from "ejs";
-// import { bookList } from "../data.js";
-import {
-  bestsellerList,
-  realTimeBestsellerList,
-  dayBestsellerList,
-  monthBestsellerList,
-  hotPriceBestsellerList,
-  steadyseller
-} from "../data.js"
+import * as controller from '../controller/controller.js';
+
+
 const router = express.Router();
 
 router.use(express.json());
 router.use(urlencoded());
 router
-  .get("/", (req, res, next) => {
-    ejs
-      .renderFile("./template/list.ejs", { bestsellerList })
-      .then((data) => res.end(data));
-  })
-  .get("/:page", (req, res, next) => {
-  res.json(bestsellerList);
-  });
+  .get("/", controller.getBs)
+
 
 export default router;
